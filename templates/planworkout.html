@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TrainSmartAI</title>
+    <meta name="title" content="TrainSmartAI" />
+    <meta name="description" content="trainingbyAi website" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
+    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&family=Roboto+Slab&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+</head>
+
+<style>
+    :root {
+        --bg-color: rgb(20, 20, 20);
+        --card-color: rgb(23, 23, 23);
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", sans-serif;
+        box-sizing: border-box;
+    }
+
+    body {
+        background-color: black;
+        overflow-x: hidden;
+    }
+
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 30px 100px;
+        transition: 0.6s;
+        z-index: 1000000;
+    }
+
+    header.sticky {
+        padding: 5px 100px;
+        background: white;
+    }
+
+    header .logo {
+        position: relative;
+        font-weight: 700;
+        color: cadetblue;
+        text-decoration: none;
+        font-size: 1.5em;
+    }
+
+    header ul {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    header ul li {
+        position: relative;
+        list-style: none;
+    }
+
+    header ul li a {
+        position: relative;
+        margin: 0 10px;
+        text-decoration: none;
+        color: white;
+        letter-spacing: 1px;
+        font-weight: 10px;
+        transition: 0.5x;
+    }
+
+    header ul li:hover {
+        color: chocolate;
+    }
+
+    .banner {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        background: black;
+        color: white;
+        margin: 150px 50px 20px
+    }
+
+    /* .banner h1 {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 150px 50px 20px;
+  font-size: 2em;
+  font-weight: 150px;
+  font-family: "Roboto Slab", serif;
+  background: linear-gradient(to right, #f32170, #ff6b08, #cf23cf, #eedd44);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+} */
+
+    /* .banner p {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  position: relative;
+  margin: 20px 50px 30px;
+  font: 1em;
+} */
+
+    header.sticky .logo,
+    header.sticky ul li a {
+        color: black;
+    }
+
+
+
+    .card:hover {
+        background: #a0c49d;
+    }
+
+    #cardss {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        max-width: 100%;
+        width: calc(100% - 20px);
+        align-items: center;
+        justify-content: center;
+        margin-left: 10px;
+        margin-bottom: 30px;
+    }
+
+    .cards {
+        background-color: rgba(255, 255, 255, 0.1);
+        height: 250px;
+        width: 300px;
+        border-radius: 10px;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .cards>card-content {
+        background-color: var(--card-color);
+        height: calc(100% - 2px);
+        width: calc(100% -2px);
+        border-radius: inherit;
+        margin: 1px;
+    }
+
+    .dashboard h1 {
+        color: white;
+        display: flex;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        font-size: 2em;
+    }
+
+    .popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        align-items: center;
+        justify-content: center;
+    }
+
+    .popup-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    #open-popup-btn {
+        background: rgb(49, 48, 48);
+        color: #cac5c5;
+
+        margin: 3px;
+    }
+
+    #sign-open-popup-btn {
+        background: rgb(49, 48, 48);
+        color: #cac5c5;
+    }
+
+    #close-popup-btn {}
+
+    /* form */
+
+    .form-box h2 {
+        font-size: 2em;
+        color: white;
+        text-align: center;
+    }
+
+    .input-box {
+        position: relative;
+        width: 100%;
+        height: 50px;
+        border-bottom: 2px solid #dbdfe3;
+        margin: 30px 0;
+    }
+
+    .input-box label {
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        transform: translateY(-50%);
+        font-size: 1em;
+        font-weight: 500;
+        color: #d5dee5;
+        pointer-events: none;
+        transition: 0.5s;
+    }
+
+    .input-box input:focus~label,
+    .input-box input:valid~label {
+        top: -5px;
+    }
+
+    .input-box input {
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        border: none;
+        outline: none;
+        font-size: 1em;
+        color: #162938;
+        font-weight: 600;
+        padding: 0 35px 0 5px;
+    }
+
+    .input-box .icon {
+        position: absolute;
+        right: 8px;
+        font-size: 1.2em;
+        color: #0f1112;
+        line-height: 57px;
+    }
+
+    .remember-forgot {
+        font-size: 0.9em;
+        color: #cccccd;
+        font-weight: 500;
+        margin: -15px 0 15px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .remember-forgot label input {
+        accent-color: #162938;
+        margin-right: 3px;
+    }
+
+    .remember-forgot a {
+        color: #e7ebee94;
+        text-decoration: none;
+    }
+
+    .remember-forgot a:hover {
+        text-decoration: underline;
+    }
+
+    .btn {
+        width: 100%;
+        height: 45px;
+        background: #000000;
+        border: none;
+        outline: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1em;
+        color: #fff;
+        font-weight: 500;
+    }
+
+    .login-register {
+        font-size: 0.9em;
+        color: #c7c5c5;
+        text-align: center;
+        font-weight: 500;
+        margin: 25px 0 10px;
+    }
+
+    .login-register p a {
+        color: #162938;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .login-register p a:hover {
+        /* hover line not working*/
+        text-decoration: underline;
+    }
+
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        margin-right: 20px;
+    }
+
+    .bar {
+        width: 30px;
+        height: 3px;
+        background-color: #fff;
+        margin: 3px 0;
+    }
+
+    .formwrap {
+        position: relative;
+        width: 400px;
+        height: 440px;
+        background: transparnt;
+        border: 2px solid rgb(255, 255, 255, 0.5);
+        border-radius: 20px;
+        backdrop-filter: blur(20px);
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .icon-close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 45px;
+        height: 45px;
+        background: #060606;
+        font-size: 2em;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-bottom-left-radius: 20px;
+        cursor: pointer;
+        z-index: 1;
+    }
+
+
+    #logoutButton {
+        display: none;
+    }
+
+    .table {
+        width: 50%;
+
+        border: 5px solid black;
+
+    }
+</style>
+
+<body>
+    <header>
+        <a href="#" class="logo">TrainWiseAI</a>
+        <nav>
+            <ul>
+                <li><a class="active" href="#">Home</a></li>
+                <li><a class="active" href="dashbord">Dashboard</a></li>
+                <li><a class="active" href="#">Explore</a></li>
+                <li><a class="active" href="#">Tracker</a></li>
+                <li><a class="active" href="#">Contact</a></li>
+
+                <button id="open-popup-btn">Login</button>
+                <button id="logoutButton">Logout</button>
+                <button id="sign-open-popup-btn">Signup</button>
+
+            </ul>
+        </nav>
+    </header>
+
+    <section class="banner">
+        <h1>Plan workout</h1>
+
+
+        <div style="margin-top: 20px">
+            <h3>6 DAY WEIGHT/CARDIO CUTTING WORKOUT</h3>
+            <h5>Monday - Chest & Triceps</h5>
+            <table class="table">
+                <tr>
+                    <th>Exercise</th>
+                    <th>Sets</th>
+
+                </tr>
+                <tr>
+                    <td colspan="2"><b>Chest</b></td>
+                </tr>
+                <tr>
+                    <td>Dumbbell Bench Press</td>
+                    <td>4</td>
+
+                </tr>
+                <tr>
+                    <td>Incline Bench Press</td>
+                    <td>4</td>
+
+                </tr>
+                <tr>
+                    <td>Cable Crossovers</td>
+                    <td>4</td>
+
+                </tr>
+
+                <tr>
+                    <td colspan="2"><b>Triceps</b></td>
+                </tr>
+                <tr>
+                    <td>Close Grip Bench Press</td>
+                    <td>4</td>
+
+                </tr>
+                <tr>
+                    <td>Lying Tricep Extension</td>
+                    <td>4</td>
+
+                </tr>
+                <tr>
+                    <td>Rope Pulldowns</td>
+                    <td>4</td>
+
+                </tr>
+            </table>
+            <h5>Tuesday - Abs & Cardio</h5>
+            <table class="table">
+                <tr>
+                    <th>Abs & Cardio</th>
+
+                    
+
+                </tr>
+                <tr>
+                    <td>Workout Schedule</td>
+                    
+                </tr>
+                <tr>
+                    <td>20mins core strength exercises</td>
+                    
+                </tr>
+            </table>
+
+            <h5>Wednesday- Back & Biceps</h5>
+            <table class="table">
+                <tr>
+                    <th>Exercise</th>
+                    <th>Sets</th>
+
+                </tr>
+                <tr>
+                    <td colspan="2"><b>Back</b></td>
+                </tr>
+                <tr>
+                    <td>Wide Grip pull Up</td>
+                    <td>4</td>
+
+                </tr>
+                <tr>
+                    <td>Close Grip Pull Downs</td>
+                    <td>4</td>
+
+                </tr>
+                <tr>
+                    <td>Cable Row</td>
+                    <td>4</td>
+
+                </tr>
+
+                <tr>
+                    <td colspan="2"><b>Biceps</b></td>
+                </tr>
+                <tr>
+                    <td>Barbell Curl</td>
+                    <td>3</td>
+
+                </tr>
+                <tr>
+                    <td>Incline Bench Dumbbell Curl</td>
+                    <td>3</td>
+
+                </tr>
+                <tr>
+                    <td>Dumbbell Preacher Curl</td>
+                    <td>3</td>
+
+                </tr>
+            </table>
+
+            <h5>Thursday - Abs & Cardio</h5>
+            <table class="table">
+                <tr>
+                    <th>Abs & Cardio</th>
+
+                    
+
+                </tr>
+                <tr>
+                    <td>Workout Schedule</td>
+                    
+                </tr>
+                <tr>
+                    <td>20mins core strength exercises</td>
+                    
+                </tr>
+            </table>
+            <h5>Friday - Legs & Shoulders</h5>
+            <table class="table">
+                <tr>
+                    <th>Exercise</th>
+                    <th>Sets</th>
+
+                </tr>
+                <tr>
+                    <td colspan="2"><b>Legs</b></td>
+                </tr>
+                <tr>
+                    <td>Squat</td>
+                    <td>4</td>
+
+                </tr>
+                <tr>
+                    <td>Stiff Leagged Deadlift</td>
+                    <td>3</td>
+
+                </tr>
+                <tr>
+                    <td>Leg Curl</td>
+                    <td>3</td>
+
+                </tr>
+                <tr>
+                    <td>Leg Extension</td>
+                    <td>3</td>
+
+                </tr>
+                <tr>
+                    <td>Standing Calf Raise</td>
+                    <td>3</td>
+
+                </tr>
+
+                <tr>
+                    <td colspan="2"><b>Shoulders</b></td>
+                </tr>
+                <tr>
+                    <td>Military Press</td>
+                    <td>4</td>
+
+                </tr>
+                <tr>
+                    <td>Dumbbell Lateral Raise</td>
+                    <td>3</td>
+
+                </tr>
+                <tr>
+                    <td>Bent Over Rev Fly</td>
+                    <td>3</td>
+
+                </tr>
+            </table>
+            <h5>Saturday - Abs & Cardio</h5>
+            <table class="table">
+                <tr>
+                    <th>Abs & Cardio</th>
+
+                    
+
+                </tr>
+                <tr>
+                    <td>Workout Schedule</td>
+                    
+                </tr>
+                <tr>
+                    <td>20mins core strength exercises</td>
+                    
+                </tr>
+            </table>
+        </div>
+    </section>
+
+
+
+ 
+
+    <!-- <div id="login-popup" class="popup">
+      <div class="popup-content">
+        <h2>Login</h2>
+        <form>
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required />
+
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
+
+          <button type="submit">Login</button>
+        </form>
+        <button id="close-popup-btn">Close</button>
+      </div>
+    </div> -->
+
+    <div id="login-popup" class="popup">
+        <div class="formwrap">
+            <span class="icon-close" id="close-popup-btn">
+                <ion-icon name="close"></ion-icon>
+            </span>
+
+            <div class="form-box login">
+                <h2>Login</h2>
+                <form action="login" method="post">
+                    <div class="input-box">
+                        <span class="icon">
+                            <ion-icon name="mail"></ion-icon>
+                        </span>
+                        <input type="email" name="email" required />
+                        <label>Email</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon">
+                            <ion-icon name="lock"></ion-icon>
+                        </span>
+                        <input type="password" name="password" required />
+                        <label>Password</label>
+                    </div>
+                    <div class="remember-forgot">
+                        <label><input type="checkbox" /> Remember me </label>
+                        <a href="#">Forgot password?</a>
+                    </div>
+                    
+                    <button type="submit" class="btn">Login</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="signup-popup" class="popup">
+        <div class="formwrap">
+            <span class="icon-close" id="sign-close-popup-btn">
+                <ion-icon name="close"></ion-icon>
+            </span>
+
+            <div class="form-box login">
+                <h2>Registration</h2>
+                <form action="/signup" method="post">
+                    <div class="input-box">
+                        <span class="icon">
+                            <ion-icon name="person"></ion-icon>
+                        </span>
+                        <input type="text" name="user" required />
+                        <label>Username</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon">
+                            <ion-icon name="mail"></ion-icon>
+                        </span>
+                        <input type="email" name="email" required />
+                        <label>Email</label>
+                    </div>
+
+                    <div class="input-box">
+                        <span class="icon">
+                            <ion-icon name="lock"></ion-icon>
+                        </span>
+                        <input type="password" name="password" required />
+                        <label>Password</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon">
+                            <ion-icon name="lock"></ion-icon>
+                        </span>
+                        <input type="password" name="conformpassword" required />
+                        <label>Confirm Password</label>
+                    </div>
+                    <!-- <div class="remember-forgot">
+                    <label
+                      ><input type="checkbox" /> I agree to the terms and
+                      conditions</label
+                    >
+                  </div> -->
+                    
+                    <button type="submit" class="btn">Register</button>
+                    <!-- <div class="login-register">
+                    <p>
+                      Already have an account?<a href="#" class="login-link">Login</a>
+                    </p>
+                  </div> -->
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+
+    </div>
+    <!-- 
+      <span class="icon-close">
+        <ion-icon name="close"></ion-icon>
+      </span>
+
+      <div class="form-box login">
+        <h2>Login</h2>
+        <form action="#">
+          <div class="input-box">
+            <span class="icon">
+              <ion-icon name="mail"></ion-icon>
+            </span>
+            <input type="email" required />
+            <label>Email</label>
+          </div>
+          <div class="input-box">
+            <span class="icon">
+              <ion-icon name="lock"></ion-icon>
+            </span>
+            <input type="password" required />
+            <label>Password</label>
+          </div>
+          <div class="remember-forgot">
+            <label><input type="checkbox" /> Remember me </label>
+            <a href="#">Forgot password?</a>
+          </div>
+          <button type="submit" class="btn">Login</button>
+          <div class="login-register">
+            <p>
+              Don't have an account?<a href="#" class="register-link"
+                >Register</a
+              >
+            </p>
+          </div>
+        </form> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
+        crossorigin="anonymous"></script>
+    <script>
+        window.addEventListener("scroll", function () {
+            var header = document.querySelector("header");
+            header.classList.toggle("sticky", window.scrollY > 0);
+        });
+
+        const openPopupBtn = document.getElementById("open-popup-btn");
+        const signopenPopupBtn = document.getElementById("sign-open-popup-btn");
+
+        const closePopupBtn = document.getElementById("close-popup-btn");
+        const signclosePopupBtn = document.getElementById("sign-close-popup-btn");
+
+        const loginPopup = document.getElementById("login-popup");
+        const signupPopup = document.getElementById("signup-popup");
+
+        openPopupBtn.addEventListener("click", () => {
+            loginPopup.style.display = "flex";
+        });
+
+        closePopupBtn.addEventListener("click", () => {
+            loginPopup.style.display = "none";
+        });
+
+        // from
+        signopenPopupBtn.addEventListener("click", () => {
+            signupPopup.style.display = "flex";
+        });
+
+        signclosePopupBtn.addEventListener("click", () => {
+            signupPopup.style.display = "none";
+        });
+
+
+        // logintoggle
+        const loginButton = document.getElementById("open-popup-btn");
+        const logoutButton = document.getElementById("logoutButton");
+        const loginContainer = document.getElementById("logo");
+
+        // Simulated user authentication status
+
+        let isLoggedIn = false
+        if (sessionStorage.getItem("sessionid") != null) {
+            isLoggedIn = true
+        }
+
+
+        // Function to handle login
+        function handleLogin() {
+            isLoggedIn = false;
+            updateUI();
+        }
+
+        // Function to handle logout
+        function handleLogout() {
+            isLoggedIn = false;
+            updateUI();
+        }
+
+        // Function to update the UI based on login status
+        function updateUI() {
+            if (isLoggedIn) {
+                loginButton.style.display = "none";
+                logoutButton.style.display = "block";
+            } else {
+                loginButton.style.display = "block";
+                logoutButton.style.display = "none";
+            }
+        }
+
+        // Attach event listeners to login and logout buttons
+        loginButton.addEventListener("click", handleLogin);
+        logoutButton.addEventListener("click", handleLogout);
+
+        // Initial UI setup
+        updateUI();
+
+    </script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons.esm.js"></script>
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+</body>
+
+</html>

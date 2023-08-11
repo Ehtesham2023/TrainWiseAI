@@ -1,4 +1,4 @@
-protobuf==3.20.3
+protobuf==4.0.0rc1
 absl-py==1.4.0
 asgiref==3.7.2
 attrs==23.1.0

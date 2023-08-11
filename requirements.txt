@@ -30,7 +30,7 @@ opencv-contrib-python==4.8.0.74
 packaging==23.1
 Pillow==9.5.0
 platformdirs==3.10.0
-protobuf==3.20.3
+protobuf==3.11.3
 pycodestyle==2.10.0
 pycparser==2.21
 PyJWT==2.8.0
